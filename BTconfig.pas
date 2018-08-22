@@ -60,8 +60,6 @@ begin
 end;
 
 
-//-------------------------------------------------
-// æ€ Ω√¿€Ω√ √÷√  »£√‚ µ .
 function TBTMethod.PairedDevices() : TStringList;
 var
   i : Integer;
@@ -185,5 +183,5 @@ begin
   FPairedDevices := PairedDevices;
   FAdapter := Adapter;
 end;
-
+//gitignore
 end.

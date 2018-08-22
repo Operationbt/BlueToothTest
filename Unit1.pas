@@ -1,4 +1,4 @@
-unit Unit1;
+ï»¿unit Unit1;
 
 interface
 
@@ -35,7 +35,8 @@ type
   private
     { Private declarations }
     BTMethod : TBTMethod;
-    TargetPaireNo : integer;                // ÇöÀç ÁöÁ¤µÈ Æä¾î¸µ µğ¹ÙÀÌ½º No
+    TargetPaireNo : integer;                // í˜„ì¬ ì§€ì •ëœ í˜ì–´ë§ ë””ë°”ì´ìŠ¤ No
+    CurDeviceServices : DServiceListType;   // í˜„ì¬ ì§€ì • ë””ë°”ì´ìŠ¤ì˜ BlueTooth ì„œë¹„ìŠ¤ ë¦¬ìŠ¤íŠ¸ ë³´ê´€
   public
     { Public declarations }
     FScanedDevices : TBluetoothDeviceList;
@@ -61,6 +62,7 @@ var
   i : Integer;
 begin
   FScanedDevices := ADeviceList;
+  lst1.Items.Clear;
 
   for i := 0 to FScanedDevices.Count - 1 do
   begin
@@ -75,18 +77,18 @@ procedure TForm1.btn1Click(Sender: TObject);
 var
   Adapter: JBluetoothAdapter;
 begin
-  //ºí·çÅõ½º°¡ ÄÑÁ®ÀÖÀ¸¸é ÁÖº¯ ÀåÄ¡¸¦ °Ë»öÇÑ´Ù.
+  //ë¸”ë£¨íˆ¬ìŠ¤ê°€ ì¼œì ¸ìˆìœ¼ë©´ ì£¼ë³€ ì¥ì¹˜ë¥¼ ê²€ìƒ‰í•œë‹¤.
   if Bluetooth1.StateConnected = True then
   begin
 
     Bluetooth1.DiscoverDevices(10000);
 
-    //¿©±â¿¡ 10ÃÊµ¿¾È °Ë»öÇÏ¸é¼­ ´Ù¸¥Ã¢ ¶ç¿ì±â.
+    //ì—¬ê¸°ì— 10ì´ˆë™ì•ˆ ê²€ìƒ‰í•˜ë©´ì„œ ë‹¤ë¥¸ì°½ ë„ìš°ê¸°.
     Layout_Searching.Visible := True;
-    //°Ë»öµÇ´Â µ¿¾È ¶ç¿î Ã¢À» ¾ø¾Ö´Â ºÎºĞÀº DiscoveryEnd¿¡ ³Ö¾î¾ßÇÑ´Ù.
+    //ê²€ìƒ‰ë˜ëŠ” ë™ì•ˆ ë„ìš´ ì°½ì„ ì—†ì• ëŠ” ë¶€ë¶„ì€ DiscoveryEndì— ë„£ì–´ì•¼í•œë‹¤.
   end
   else
-    ShowMessage('ºí·çÅõ½º°¡ ²¨Á®ÀÖ½À´Ï´Ù.');
+    ShowMessage('ë¸”ë£¨íˆ¬ìŠ¤ê°€ êº¼ì ¸ìˆìŠµë‹ˆë‹¤.');
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -101,17 +103,17 @@ var
 begin
   Bluetooth1.Enabled := True;
 
-  //ºí·çÅõ½º°¡ ²¨Á®ÀÖÀ¸¸é ÀÚµ¿À¸·Î ºí·çÅõ½º ON
+  //ë¸”ë£¨íˆ¬ìŠ¤ê°€ êº¼ì ¸ìˆìœ¼ë©´ ìë™ìœ¼ë¡œ ë¸”ë£¨íˆ¬ìŠ¤ ON
   if Bluetooth1.StateConnected = False then
   begin
     Adapter := TJBluetoothAdapter.JavaClass.getDefaultAdapter;
     if Adapter.enable then
-      //ShowMessage('Bluetooth¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.')
+      //ShowMessage('Bluetoothë¥¼ í™œì„±í™”í•©ë‹ˆë‹¤.')
     else
-      ShowMessage('»ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.');
+      ShowMessage('ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.');
   end;
 
-  BTMethod := TBTMethod.Create //BTconfig°´Ã¼ »ı¼º
+  BTMethod := TBTMethod.Create //BTconfigê°ì²´ ìƒì„±
 
 end;
 
@@ -119,30 +121,62 @@ procedure TForm1.lst1ItemClick(const Sender: TCustomListBox;
   const Item: TListBoxItem);
 var
   i : Integer;
-begin
-  //°Ë»öµÈ ÀåÄ¡¸¦ ´©¸£¸é ¹Ù·Î Æä¾î¸µ
-  Bluetooth1.Pair(FScanedDevices.Items[Item.Index]);
 
-  //°Ë»ö ¸®½ºÆ®¿¡¼­ ´©¸¥ ÀÌ¸§°ú Æä¾î¸µ ¸®½ºÆ®ÀÇ ÀÌ¸§°ú ºñ±³ÇÏ¿© Æä¾î¸µ ¸®½ºÆ® ÀÎµ¦½º ¾òÀ½
-  for i := 0 to Bluetooth1.PairedDevices.Count do
+begin
+  //ê²€ìƒ‰ëœ ì¥ì¹˜ë¥¼ ëˆ„ë¥´ë©´ ë°”ë¡œ í˜ì–´ë§
+  i := Bluetooth1.PairedDevices.Count;
+  Bluetooth1.Pair(FScanedDevices.Items[Item.Index]);
+  btn1.Text := 'done';
+  //í˜ì–´ë§ ë¹„ë°€ë²ˆí˜¸ ì…ë ¥í•˜ë¼ëŠ” ì°½ì´ ëœ¨ëŠ”ë° ì…ë ¥ ì™„ë£Œí• ë•Œê¹Œì§€ ëŒ€ê¸°í•´ì•¼í•¨
+  //ëŒ€ê¸°í•˜ëŠ”ê±° êµ¬í˜„ ì•ˆë˜ë©´ ë‹¤ë¥¸ ë©”ì†Œë“œì—ì„œ ì´í›„ ê¸°ëŠ¥ë“¤ ë„£ì–´ì•¼í• ë“¯
+  {
+  while True do
   begin
-    if Item.Text = Bluetooth1.PairedDevices.Items[i].DeviceName then
-      TargetPaireNo := i;
+    //í˜ì–´ë§ëœ ê¸°ê¸° ê°¯ìˆ˜ë¥¼ ê³„ì† ì²´í¬í•˜ë©´ì„œ ì²˜ìŒê³¼ ë‹¬ë¼ì§€ë©´ ë¹ ì ¸ë‚˜ì˜¨ë‹¤
+    if Bluetooth1.PairedDevices.Count <> i then
+      Break;
   end;
 
-  //BTMethod¿¡ ºí·çÅõ½º ¸Ş´ÏÀúÁ¤º¸ Àü´Ş
+
+
+
+  //ê²€ìƒ‰ ë¦¬ìŠ¤íŠ¸ì—ì„œ ëˆ„ë¥¸ ì´ë¦„ê³¼ í˜ì–´ë§ ë¦¬ìŠ¤íŠ¸ì˜ ì´ë¦„ê³¼ ë¹„êµí•˜ì—¬ í˜ì–´ë§ ë¦¬ìŠ¤íŠ¸ ì¸ë±ìŠ¤ ì–»ìŒ
+  for i := 0 to Bluetooth1.PairedDevices.Count - 1 do
+  begin
+    if Item.Text = Bluetooth1.PairedDevices.Items[i].DeviceName then
+    begin
+      TargetPaireNo := i;
+      Break;
+    end;
+  end;
+
+  //BTMethodì— ë¸”ë£¨íˆ¬ìŠ¤ ë©”ë‹ˆì €ì •ë³´ ì „ë‹¬
   BTMethod.Setup(Bluetooth1.CurrentManager, Bluetooth1.PairedDevices, Bluetooth1.CurrentAdapter);
 
 
-  //¼­ºñ½º¿¡ ½Ã¸®¾ó ÀÖ´ÂÁö ÆÇº°, ¾øÀ¸¸é ¿¬°áÇÒ¼ö ¾ø´Â ÀåÄ¡¶ó°í ¾È³».
+  //ì„œë¹„ìŠ¤ì— ì‹œë¦¬ì–¼ ìˆëŠ”ì§€ íŒë³„, ì—†ìœ¼ë©´ ì—°ê²°í• ìˆ˜ ì—†ëŠ” ì¥ì¹˜ë¼ê³  ì•ˆë‚´.
+  CurDeviceServices := BTMethod.Find_ServicesList(TargetPaireNo);
 
-  //ÇÑ±ÛÇÑ±Û
+  if CurDeviceServices.DServiceName.Find('SerialPort',i) then
+  begin
+    ShowMessage('OK');
+  end
+  else
+  begin
+    ShowMessage('ì—°ê²°í•  ìˆ˜ ì—†ëŠ” ì¥ì¹˜ì…ë‹ˆë‹¤.');
+  end;
 
-  //¾Æ´Ï ÀÎÄÚµù ¹ºµ¥
+  }
 
 
+  //í•œê¸€í•œê¸€
+  {
+  [i18n]
+  logOutputEncoding = euc-kr
+  commitEncoding = euc-kr
+  }
 
-
+  //gitignore
 end;
 
 end.

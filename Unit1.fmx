@@ -16,7 +16,7 @@ object Form1: TForm1
     Size.Height = 586.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -28,7 +28,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 185.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -61,10 +61,9 @@ object Form1: TForm1
         OnClick = btn1Click
       end
       object Layout_Searching: TLayout
-        Position.X = 104.000000000000000000
-        Position.Y = 216.000000000000000000
-        Size.Width = 266.000000000000000000
-        Size.Height = 265.000000000000000000
+        Align = Client
+        Size.Width = 370.000000000000000000
+        Size.Height = 493.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         object Rectangle1: TRectangle
@@ -72,22 +71,23 @@ object Form1: TForm1
           Fill.Color = claBlack
           Opacity = 0.500000000000000000
           Sides = []
-          Size.Width = 266.000000000000000000
-          Size.Height = 209.000000000000000000
+          Size.Width = 370.000000000000000000
+          Size.Height = 169.000000000000000000
           Size.PlatformDefault = False
         end
         object Rectangle2: TRectangle
           Align = Client
           Fill.Color = claNull
           Sides = []
-          Size.Width = 266.000000000000000000
+          Size.Width = 370.000000000000000000
+          Size.Height = 151.000000000000000000
           Size.PlatformDefault = False
           object lbl1: TLabel
             Align = VertCenter
             Margins.Left = 20.000000000000000000
             Position.X = 100.000000000000000000
-            Position.Y = -26.000000000000000000
-            Size.Width = 166.000000000000000000
+            Position.Y = 49.000000000000000000
+            Size.Width = 270.000000000000000000
             Size.Height = 52.000000000000000000
             Size.PlatformDefault = False
             Text = #51109#52824#47484' '#44160#49353#51473#51077#45768#45796'.'
@@ -95,7 +95,7 @@ object Form1: TForm1
           end
           object AniIndicator3: TAniIndicator
             Enabled = True
-            Position.X = 240.000000000000000000
+            Position.X = 296.000000000000000000
             Position.Y = 24.000000000000000000
             Size.Width = 50.000000000000000000
             Size.Height = 48.000000000000000000
@@ -107,6 +107,7 @@ object Form1: TForm1
             Margins.Left = 30.000000000000000000
             Position.X = 30.000000000000000000
             Size.Width = 50.000000000000000000
+            Size.Height = 151.000000000000000000
             Size.PlatformDefault = False
             Style = Circular
           end
@@ -115,10 +116,10 @@ object Form1: TForm1
           Align = MostBottom
           Fill.Color = claBlack
           Opacity = 0.500000000000000000
-          Position.Y = 40.000000000000000000
+          Position.Y = 320.000000000000000000
           Sides = []
-          Size.Width = 266.000000000000000000
-          Size.Height = 225.000000000000000000
+          Size.Width = 370.000000000000000000
+          Size.Height = 173.000000000000000000
           Size.PlatformDefault = False
         end
       end
@@ -127,7 +128,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 185.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
