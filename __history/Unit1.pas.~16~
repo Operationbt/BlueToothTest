@@ -130,13 +130,10 @@ begin
       TargetPaireNo := i;
   end;
 
-  //BTMethod에 블루투스 메니저정보 전달
-  BTMethod.Setup(Bluetooth1.CurrentManager, Bluetooth1.PairedDevices, Bluetooth1.CurrentAdapter);
 
 
   //서비스에 시리얼 있는지 판별, 없으면 연결할수 없는 장치라고 안내.
 
-  //한글한글
 
 
 
