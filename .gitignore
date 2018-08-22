@@ -1,3 +1,6 @@
+Android/
+AndroidManifest.template.xml
+*.deployproj
 # Delphi compiler-generated binaries (safe to delete)
 *.exe
 *.dll
@@ -32,3 +35,4 @@
 # Delphi history and backups
 __history/
 __recovery/
+*.~*

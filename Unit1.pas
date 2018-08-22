@@ -176,7 +176,7 @@ begin
   commitEncoding = euc-kr
   }
 
-  //gitignore
+  //gitignore 123
 end;
 
 end.

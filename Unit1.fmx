@@ -96,7 +96,7 @@ object Form1: TForm1
           object AniIndicator3: TAniIndicator
             Enabled = True
             Position.X = 296.000000000000000000
-            Position.Y = 24.000000000000000000
+            Position.Y = 40.000000000000000000
             Size.Width = 50.000000000000000000
             Size.Height = 48.000000000000000000
             Size.PlatformDefault = False
