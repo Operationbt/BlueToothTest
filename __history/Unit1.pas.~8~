@@ -1,0 +1,88 @@
+unit Unit1;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
+  System.Bluetooth, System.Bluetooth.Components, FMX.Layouts, FMX.ListBox,
+  FMX.Controls.Presentation, FMX.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    TabControl1: TTabControl;
+    TabItem1: TTabItem;
+    TabItem2: TTabItem;
+    Bluetooth1: TBluetooth;
+    lst1: TListBox;
+    btn1: TButton;
+    procedure FormShow(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+    procedure Bluetooth1DiscoveryEnd(const Sender: TObject;
+      const ADeviceList: TBluetoothDeviceList);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    FScanedDevices : TBluetoothDeviceList;
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.fmx}
+
+uses
+  Androidapi.JNI.Bluetooth,
+  Androidapi.Helpers,
+  Androidapi.JNI.GraphicsContentViewText;
+
+
+procedure TForm1.Bluetooth1DiscoveryEnd(const Sender: TObject;
+  const ADeviceList: TBluetoothDeviceList);
+var
+  i : Integer;
+begin
+  FScanedDevices := ADeviceList;
+
+  for i := 0 to FScanedDevices.Count - 1 do
+  begin
+    lst1.Items.Add(FScanedDevices.Items[i].DeviceName);
+  end;
+end;
+
+procedure TForm1.btn1Click(Sender: TObject);
+var
+  Adapter: JBluetoothAdapter;
+begin
+  //블루투스가 켜져있으면 주변 장치를 검색한다.
+  if Bluetooth1.StateConnected = True then
+  begin
+    ShowMessage('ON');
+    Bluetooth1.DiscoverDevices(10000);
+    //여기에 10초동안 검색하면서 다른창 띄워야 할텐데....
+
+  end;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+var
+  Adapter: JBluetoothAdapter;
+begin
+  //블루투스가 꺼져있으면 자동으로 블루투스 ON
+  if Bluetooth1.StateConnected = False then
+  begin
+    Adapter := TJBluetoothAdapter.JavaClass.getDefaultAdapter;
+    if Adapter.enable then
+      ShowMessage('Bluetooth를 활성화합니다.')
+    else
+      ShowMessage('사용할 수 없습니다.');
+  end;
+
+  Bluetooth1.Enabled := True;
+
+end;
+
+end.
