@@ -1,6 +1,8 @@
 Android/
 AndroidManifest.template.xml
 *.deployproj
+*.res
+*.stat
 # Delphi compiler-generated binaries (safe to delete)
 *.exe
 *.dll

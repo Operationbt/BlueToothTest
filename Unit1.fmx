@@ -16,7 +16,7 @@ object Form1: TForm1
     Size.Height = 586.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = Bottom
     Sizes = (
@@ -28,7 +28,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 185.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -128,7 +128,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 185.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
@@ -142,6 +142,7 @@ object Form1: TForm1
         Position.Y = 24.000000000000000000
         TabOrder = 0
         Text = #47785#47197
+        OnClick = btn2Click
       end
       object lst2: TListBox
         Align = VertCenter
@@ -156,6 +157,22 @@ object Form1: TForm1
         DefaultItemStyles.GroupFooterStyle = ''
         Viewport.Width = 370.000000000000000000
         Viewport.Height = 280.000000000000000000
+      end
+      object edt1: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 136.000000000000000000
+        Position.Y = 32.000000000000000000
+        Size.Width = 153.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object btn3: TButton
+        Position.X = 248.000000000000000000
+        Position.Y = 72.000000000000000000
+        TabOrder = 3
+        Text = 'btn3'
+        OnClick = btn3Click
       end
     end
   end
